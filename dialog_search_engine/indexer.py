@@ -61,8 +61,8 @@ class SortBasedIndexer:
 
 
 def test_SortBasedIndex():
-    from tokenizer import CaboChaBasicTokenizer
-    tokenizer = CaboChaBasicTokenizer()
+    from tokenizer import CaboChaContentWordTokenizer
+    tokenizer = CaboChaContentWordTokenizer()
 
     indexer = SortBasedIndexer(":memory:", tokenizer)
     sent_pairs = [
