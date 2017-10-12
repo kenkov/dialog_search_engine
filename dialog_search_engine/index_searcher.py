@@ -2,7 +2,6 @@
 # coding:utf-8
 
 
-import math
 from collections import defaultdict
 from dialog_search_engine.database import Database
 from dialog_search_engine.database import NotFoundException
@@ -38,21 +37,27 @@ class IndexSearcher:
         for word in words:
             try:
                 posting_list = self._db.search_posting_list(word)
-                df = len(posting_list.posting_list)
+                # df = len(posting_list.posting_list)
                 for pos in posting_list:
                     id_ = pos.id
                     # tf = math.sqrt(pos.tf)
-                    tf = 1
-                    idf = math.log(self._num_dialogs / (df + 1)) + 1
-                    id_score[id_] += tf * idf
+                    # idf = math.log(self._num_dialogs / (df + 1)) + 1
+                    # id_score[id_] += tf * idf
+                    id_score[id_] += 1
             except NotFoundException:
                 pass
         id_score_dialog = dict()
         dialogs = self._db.search_dialogs(id_score.keys())
         for dialog in dialogs:
             id_ = dialog.id
-            id_score_dialog[id_] = (id_score[id_] / math.sqrt(dialog.length),
-                                    dialog)
+            # id_score_dialog[id_] = (id_score[id_] / math.sqrt(dialog.length),
+            #                         dialog)
+
+            # calculate F score
+            prec = id_score[id_] / len(words)
+            rec = id_score[id_] / dialog.length
+            score = 2*prec*rec / (prec + rec)
+            id_score_dialog[id_] = (score, dialog)
         return id_score_dialog
 
 
