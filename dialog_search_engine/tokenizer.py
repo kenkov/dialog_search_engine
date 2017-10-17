@@ -28,6 +28,10 @@ class CaboChaSemanticWordTokenizer(CaboChaBasicTokenizer):
 
     def _is_valid_token(self, token):
         """トークンが文の意味を表す場合は True を返す"""
+        if token.surface in {"ん", "の"} and token.pos == "名詞":
+            # 「書いたのです」「書いたんです」などの「の」「ん」は除く
+            return False
+
         cond = [token.pos in {"動詞", "形容詞", "名詞", "感動詞",
                               "記号", "副詞",
                               "連体詞",  # 「あの」
