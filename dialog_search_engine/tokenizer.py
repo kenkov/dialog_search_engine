@@ -43,7 +43,11 @@ class CaboChaSemanticWordTokenizer(CaboChaBasicTokenizer):
                 (token.pos == "助動詞" and token.genkei == "ん")  or # 「いきません」の「ん」
                 (token.pos == "助動詞" and token.genkei == "ない") or
                 # 欲求
-                (token.pos == "助動詞" and token.genkei == "たい")
+                (token.pos == "助動詞" and token.genkei == "たい") or
+                # 提案
+                (token.pos == "助動詞" and token.genkei == "う") or
                 # 疑問
+                (token.pos == "助詞" and token.genkei == "か") or
+                (token.pos == "助詞" and token.genkei == "っけ")
                 ]
         return any(cond)
