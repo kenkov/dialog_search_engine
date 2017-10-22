@@ -37,6 +37,10 @@ class CaboChaSemanticWordTokenizer(CaboChaBasicTokenizer):
                               "連体詞",  # 「あの」
                               "接続詞",
                               } or
+                # 格助詞
+                token.pos1 == "格助詞" or
+                (token.pos1 == "副助詞" and token.surface == "まで") or
+                (token.pos1 == "係助詞" and token.surface == "は") or
                 # 過去形
                 (token.pos == "助動詞" and token.genkei == "た") or  # 過去形の「た」
                 # 否定形
