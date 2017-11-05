@@ -52,6 +52,9 @@ class CaboChaSemanticWordTokenizer(CaboChaBasicTokenizer):
                 (token.pos == "助動詞" and token.genkei == "う") or
                 # 疑問
                 (token.pos == "助詞" and token.genkei == "か") or
-                (token.pos == "助詞" and token.genkei == "っけ")
+                (token.pos == "助詞" and token.genkei == "っけ") or
+                # 接続助詞
+                #   例: #   「大阪に行っ**て**」「お腹が痛い**ので**」「立ち上がる**と**」
+                (token.pos == "助詞" and token.pos1 == "接続助詞")
                 ]
         return any(cond)
