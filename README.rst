@@ -10,6 +10,7 @@ scripts/create_index.py
     インデックスを作成する
 
 ::
+
     $ python scripts/create_index.py textfilename dbname
 
 
