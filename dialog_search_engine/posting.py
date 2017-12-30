@@ -80,32 +80,3 @@ class PostingList:
 
     def __repr__(self):
         return self.__str__()
-
-
-def test_Posting():
-    p = Posting("ご飯", 1025, 9)
-    ep = p.encode()
-    ans = ('ご飯', b'\x00\x00\x04\x01\x00\x00\x00\x09')
-    assert ep == ans
-    dp = Posting.decode(*ans)
-    assert dp == p
-
-
-def test_PostingList():
-    postings = [
-        Posting("ご飯", 1, 2),
-        Posting("ご飯", 0, 3),
-        Posting("ご飯", 3, 1),
-    ]
-    posting_list = PostingList(postings)
-    sorted_postings = [
-        Posting("ご飯", 0, 3),
-        Posting("ご飯", 1, 2),
-        Posting("ご飯", 3, 1),
-    ]
-    assert posting_list.posting_list == sorted_postings
-    epl = posting_list.encode()
-    ans = ('ご飯',
-           b'\x00\x00\x00\x00\x00\x00\x00\x03\x00\x00\x00\x01\x00\x00\x00\x02\x00\x00\x00\x03\x00\x00\x00\x01')
-    assert epl == ans
-    assert PostingList.decode(*ans) == PostingList(sorted_postings)
