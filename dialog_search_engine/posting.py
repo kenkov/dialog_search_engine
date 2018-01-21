@@ -53,9 +53,10 @@ class PostingList:
         self.word = postings[0].word
         self.posting_list = list(sorted(postings,
                                         key=lambda pos: pos.id,))
+        self.df = len(postings)
 
     @staticmethod
-    def decode(word, bytes_):
+    def decode(word, bytes_, df):
         len_bytes = len(bytes_)
         assert len_bytes % 8 == 0
         postings = [Posting.decode(word, bytes_[i:i+8])
@@ -67,7 +68,7 @@ class PostingList:
         bytes_ = b''.join(b for w, b in encoded_poses)
         word = encoded_poses[0][0]
 
-        return word, bytes_
+        return word, bytes_, self.df
 
     def __eq__(self, other):
         return self.posting_list == other.posting_list
@@ -76,7 +77,8 @@ class PostingList:
         return iter(self.posting_list)
 
     def __str__(self):
-        return f'PostingList(word="{self.word}",posting_list={self.posting_list})'
+        return (f'PostingList(word="{self.word}",'
+                f'posting_list={self.posting_list})')
 
     def __repr__(self):
         return self.__str__()
