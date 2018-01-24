@@ -11,9 +11,9 @@ class Posting:
         -----------------------------------
         おはよう    1               2
     """
-    def __init__(self, word, id, tf):
+    def __init__(self, word, id_, tf):
         self.word = word
-        self.id = id
+        self.id_ = id_
         self.tf = tf
 
     @staticmethod
@@ -27,20 +27,20 @@ class Posting:
         """ストレージへの保存形式にエンコードする
         id と tf をそれぞれ 4 byte の big endian エンコードする
         """
-        bytes_ = self.id.to_bytes(4, byteorder="big") + \
+        bytes_ = self.id_.to_bytes(4, byteorder="big") + \
             self.tf.to_bytes(4, byteorder="big")
         return (self.word, bytes_)
 
     def __eq__(self, other):
         return (self.word == other.word and
-                self.id == other.id and
+                self.id_ == other.id_ and
                 self.tf == other.tf)
 
     def __hash__(self):
         hash((self.word, self.id, self.tf))
 
     def __str__(self):
-        return f'Posting(word="{self.word}",id={self.id},tf={self.tf})'
+        return f'Posting(word="{self.word}",id_={self.id_},tf={self.tf})'
 
     def __repr__(self):
         return self.__str__()
@@ -52,7 +52,7 @@ class PostingList:
         assert postings
         self.word = postings[0].word
         self.posting_list = list(sorted(postings,
-                                        key=lambda pos: pos.id,))
+                                        key=lambda pos: pos.id_,))
         self.df = len(postings)
 
     @staticmethod
