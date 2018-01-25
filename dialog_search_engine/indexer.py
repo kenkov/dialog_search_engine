@@ -5,32 +5,28 @@
 from collections import Counter
 from dialog_search_engine.posting import Posting
 from dialog_search_engine.posting import PostingList
-from dialog_search_engine.database import Database
-from dialog_search_engine.dialog import Dialog
+from dialog_search_engine.dialog import DialogFactory
 
 
 class SortBasedIndexer:
     """インデックス構築器"""
-    def __init__(self, dbname, tokenizer):
-        self._db = Database(dbname)
-        self._tokenizer = tokenizer
+    def __init__(self,
+                 db,
+                 dialog_factory=DialogFactory()):
+        self._db = db
+        self._dialog_factory = dialog_factory
 
     def create_index(self, sent_pairs):
         postings, dialogs = self._get_posting_dialog(sent_pairs)
         posting_lists = self._get_posting_lists(postings)
 
-        self._db.init()
+        self._db.create_table()
         self._db.add_dialogs(dialogs)
         self._db.add_posting_lists(posting_lists)
 
-    def _get_dialogs(self, sent_pairs):
-        dialogs = [Dialog(i, *pair)
-                   for i, pair in enumerate(sent_pairs)]
-        return dialogs
-
     def _get_posting_lists(self, posting):
         sorted_posting = list(sorted(posting,
-                                     key=lambda pos: (pos.word, pos.id)
+                                     key=lambda pos: (pos.word, pos.id_)
                                      ))
         postings = []
         posting_list = []
@@ -48,25 +44,15 @@ class SortBasedIndexer:
 
     def _get_posting_dialog(self, sent_pairs):
         """文書集合からポスティングの集合を得るメソッド"""
-        posting = []
-        dialog = []
+        postings = []
+        dialogs = []
         for i, (src, tgt) in enumerate(sent_pairs):
-            tokens = self._tokenizer.tokenize(src)
-            dialog.append(Dialog(i, len(tokens), src, tgt))
-            count = Counter(tokens)
+            dialog = self._dialog_factory.build(input_text=src,
+                                                response_text=tgt,
+                                                id_=i)
+            dialogs.append(dialog)
+            count = Counter(dialog.input_doc.tokens)
             for word, tf in count.items():
                 item = Posting(word, i, tf)
-                posting.append(item)
-        return posting, dialog
-
-
-def test_SortBasedIndex():
-    from tokenizer import CaboChaContentWordTokenizer
-    tokenizer = CaboChaContentWordTokenizer()
-
-    indexer = SortBasedIndexer(":memory:", tokenizer)
-    sent_pairs = [
-        ("ご飯を食べる", "美味しい"),
-        ("ご飯を食べたい", "食べて")
-    ]
-    indexer.create_index(sent_pairs)
+                postings.append(item)
+        return postings, dialogs
