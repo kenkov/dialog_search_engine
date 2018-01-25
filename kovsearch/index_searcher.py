@@ -3,8 +3,8 @@
 
 
 from collections import defaultdict
-from dialog_search_engine.database import NotFoundException
-from dialog_search_engine.document import DocumentFactory
+from kovsearch.database import NotFoundException
+from kovsearch.document import DocumentFactory
 
 
 class IndexSearcher:

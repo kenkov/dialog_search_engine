@@ -3,8 +3,8 @@
 
 import unittest
 from unittest.mock import Mock
-from dialog_search_engine.indexer import SortBasedIndexer
-from dialog_search_engine.dialog import DialogFactory
+from kovsearch.indexer import SortBasedIndexer
+from kovsearch.dialog import DialogFactory
 from test.test_dialog import DocumentFactoryDouble
 
 

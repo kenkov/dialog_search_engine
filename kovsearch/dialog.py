@@ -2,8 +2,8 @@
 # coding:utf-8
 
 
-from dialog_search_engine.document import Document
-from dialog_search_engine.document import DocumentFactory
+from kovsearch.document import Document
+from kovsearch.document import DocumentFactory
 
 
 class Dialog:

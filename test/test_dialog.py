@@ -2,9 +2,9 @@
 # coding:utf-8
 
 import unittest
-from dialog_search_engine.dialog import DialogFactory
-from dialog_search_engine.dialog import Dialog
-from dialog_search_engine.document import Document
+from kovsearch.dialog import DialogFactory
+from kovsearch.dialog import Dialog
+from kovsearch.document import Document
 
 
 class DocumentFactoryDouble:

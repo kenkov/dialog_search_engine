@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # coding:utf-8
 
-from dialog_search_engine.tokenizer import CaboChaContentWordTokenizer
+from kovsearch.tokenizer import CaboChaContentWordTokenizer
 
 
 class Document:

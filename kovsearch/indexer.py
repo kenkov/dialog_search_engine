@@ -3,9 +3,9 @@
 
 
 from collections import Counter
-from dialog_search_engine.posting import Posting
-from dialog_search_engine.posting import PostingList
-from dialog_search_engine.dialog import DialogFactory
+from kovsearch.posting import Posting
+from kovsearch.posting import PostingList
+from kovsearch.dialog import DialogFactory
 
 
 class SortBasedIndexer:

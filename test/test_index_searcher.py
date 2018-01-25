@@ -2,12 +2,12 @@
 # coding: utf-8
 
 import unittest
-from dialog_search_engine.dialog import DialogFactory
+from kovsearch.dialog import DialogFactory
 from test.test_dialog import DocumentFactoryDouble
-from dialog_search_engine.scorer import ScoredDialog
-from dialog_search_engine.database import Database
+from kovsearch.scorer import ScoredDialog
+from kovsearch.database import Database
 from test.test_scorer import ScorerInterfaceTestMixin
-from dialog_search_engine.index_searcher import IndexSearcher
+from kovsearch.index_searcher import IndexSearcher
 
 
 class ScorerDouble:

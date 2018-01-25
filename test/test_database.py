@@ -2,11 +2,11 @@
 # coding: utf-8
 
 import unittest
-from dialog_search_engine.posting import Posting
-from dialog_search_engine.posting import PostingList
-from dialog_search_engine.dialog import DialogFactory
+from kovsearch.posting import Posting
+from kovsearch.posting import PostingList
+from kovsearch.dialog import DialogFactory
 from test.test_dialog import DocumentFactoryDouble
-from dialog_search_engine.database import Database
+from kovsearch.database import Database
 
 
 class TestDatabase(unittest.TestCase):

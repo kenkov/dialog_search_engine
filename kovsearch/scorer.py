@@ -4,7 +4,7 @@
 
 from collections import defaultdict
 from collections import namedtuple
-from dialog_search_engine.database import NotFoundException
+from kovsearch.database import NotFoundException
 
 
 ScoredDialog = namedtuple("ScoredDialog", ["score", "dialog"])

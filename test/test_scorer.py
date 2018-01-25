@@ -2,10 +2,10 @@
 # coding: utf-8
 
 import unittest
-from dialog_search_engine.dialog import DialogFactory
+from kovsearch.dialog import DialogFactory
 from test.test_dialog import DocumentFactoryDouble
-from dialog_search_engine.database import Database
-from dialog_search_engine.scorer import IdfWeightedJaccardScorer
+from kovsearch.database import Database
+from kovsearch.scorer import IdfWeightedJaccardScorer
 
 
 class ScorerInterfaceTestMixin:

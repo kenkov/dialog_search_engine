@@ -3,8 +3,8 @@
 
 
 import unittest
-from dialog_search_engine.posting import Posting
-from dialog_search_engine.posting import PostingList
+from kovsearch.posting import Posting
+from kovsearch.posting import PostingList
 
 
 class TestPosting(unittest.TestCase):

@@ -3,8 +3,8 @@
 
 
 import sqlite3
-from dialog_search_engine.posting import PostingList
-from dialog_search_engine.dialog import Dialog
+from kovsearch.posting import PostingList
+from kovsearch.dialog import Dialog
 
 
 class Database:
