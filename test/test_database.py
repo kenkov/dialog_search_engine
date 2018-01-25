@@ -22,7 +22,7 @@ class TestDatabase(unittest.TestCase):
                                  id_=1)
                    ]
         db = Database(":memory:")
-        db.init()
+        db.create_table()
         db.add_dialogs(dialogs)
 
         # test
@@ -43,7 +43,7 @@ class TestDatabase(unittest.TestCase):
         posting_list_rice = PostingList(postings_rice)
         posting_list_eat = PostingList(postings_eat)
         db = Database(":memory:")
-        db.init()
+        db.create_table()
         db.add_posting_lists([posting_list_rice, posting_list_eat])
 
         # test

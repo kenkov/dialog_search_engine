@@ -12,7 +12,7 @@ class Database:
         self._dbname = dbname
         self._conn = sqlite3.connect(dbname)
 
-    def init(self):
+    def create_table(self):
         cur = self._conn.cursor()
         cur.execute('''
             CREATE TABLE dialogs
