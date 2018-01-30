@@ -4,8 +4,8 @@
 
 if __name__ == '__main__':
     import sys
-    from dialog_search_engine.database import Database
-    from dialog_search_engine.indexer import SortBasedIndexer
+    from kovsearch.database import Database
+    from kovsearch.indexer import SortBasedIndexer
 
     filename = sys.argv[1]
     dbname = sys.argv[2]
