@@ -5,6 +5,7 @@
 from collections import defaultdict
 from collections import namedtuple
 from kovsearch.database import NotFoundException
+import math
 
 
 ScoredDialog = namedtuple("ScoredDialog", ["score", "dialog"])
@@ -14,6 +15,7 @@ class IdfWeightedJaccardScorer:
     """Idf で重み付けした Jaccard スコアのよるスコアづけをするクラス"""
     def __init__(self, db):
         self._db = db
+        self._num_dialogs = self._db.get_num_dialogs()
 
     def scores(self, query, dialogs):
         """
@@ -42,7 +44,9 @@ class IdfWeightedJaccardScorer:
         return score
 
     def _idf_score(self, df, dic):
-        return sum(val/(df[key]+1) for key, val in dic.items())
+        idf_dict = {key: math.log(self._num_dialogs / (df[key] + 1))
+                    for key in dic}
+        return sum(val / idf_dict[key] for key, val in dic.items())
 
     def _df_dict(self, query, dialogs):
         df = defaultdict(int)
