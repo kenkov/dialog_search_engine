@@ -46,7 +46,7 @@ class IdfWeightedJaccardScorer:
     def _idf_score(self, df, dic):
         idf_dict = {key: math.log(self._num_dialogs / (df[key] + 1))
                     for key in dic}
-        return sum(val / idf_dict[key] for key, val in dic.items())
+        return sum(val * idf_dict[key] for key, val in dic.items())
 
     def _df_dict(self, query, dialogs):
         df = defaultdict(int)
