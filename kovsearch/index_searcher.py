@@ -5,6 +5,7 @@
 from collections import defaultdict
 from kovsearch.database import NotFoundException
 from kovsearch.document import DocumentFactory
+from kovsearch.util import Time
 
 
 class IndexSearcher:
@@ -40,6 +41,10 @@ class IndexSearcher:
             except NotFoundException:
                 pass
 
-        dialogs = self._db.search_dialogs(id_score.keys())
+        with Time(format="search time: "):
+            dialogs = self._db.search_dialogs(id_score.keys())
 
-        return self._scorer.scores(query, dialogs)
+        with Time(format="score time: "):
+            scored = self._scorer.scores(query, dialogs)
+
+        return scored
