@@ -33,13 +33,14 @@ class IndexSearcher:
 
     def _get_score_dialogs(self, query):
         id_score = defaultdict(int)
-        for word in query.tokens:
-            try:
-                posting_list = self._db.search_posting_list(word)
-                for pos in posting_list:
-                    id_score[pos.id_] += 1
-            except NotFoundException:
-                pass
+        with Time(format="search posting list: "):
+            for word in query.tokens:
+                try:
+                    posting_list = self._db.search_posting_list(word)
+                    for pos in posting_list:
+                        id_score[pos.id_] += 1
+                except NotFoundException:
+                    pass
 
         with Time(format="search time: "):
             dialogs = self._db.search_dialogs(id_score.keys())

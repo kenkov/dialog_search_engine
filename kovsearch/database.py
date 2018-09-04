@@ -70,6 +70,11 @@ class Database:
         else:
             raise NotFoundException()
 
+    def search_dfs(self, words):
+        cur = self._conn.cursor()
+        cur.execute('select word,df from posting_lists where word in ({0})'.format(','.join('?' for _ in words)), words)
+        return cur.fetchall()
+
     def search_dialog(self, id_):
         cur = self._conn.cursor()
         cur.execute('select * from dialogs where id=?',

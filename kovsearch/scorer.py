@@ -23,6 +23,11 @@ class IdfWeightedJaccardScorer:
             query (Document):
             dialog (List[Dialog]):
         """
+
+        num_query_token = len(query.tokens)
+        dialogs = [dia for dia in dialogs
+                   if math.fabs(len(dia.input_doc.tokens) - num_query_token) < 4]
+
         # df 辞書の作成
         df = self._df_dict(query, dialogs)
         scores = [ScoredDialog(self._score(query, dialog, df), dialog)
@@ -50,19 +55,17 @@ class IdfWeightedJaccardScorer:
 
     def _df_dict(self, query, dialogs):
         df = defaultdict(int)
+
+        _words = set()
         for word in query.tokens:
-            if word not in df:
-                try:
-                    df[word] = self._db.search_df(word)
-                except NotFoundException:
-                    pass
+            _words.add(word)
         for dialog in dialogs:
             for word in dialog.input_doc.tokens:
-                if word not in df:
-                    try:
-                        df[word] = self._db.search_df(word)
-                    except NotFoundException:
-                        pass
+                _words.add(word)
+
+        for key, val in self._db.search_dfs(list(_words)):
+            df[key] = val
+
         return df
 
     def _freq_dic(self, tokens):
