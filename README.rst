@@ -14,7 +14,7 @@ scripts/create_index.py
     $ python scripts/create_index.py textfilename dbname
 
 
-scripts/create_index.py
+scripts/search.py
     DB を検索する
 
 ::
