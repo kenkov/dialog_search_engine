@@ -6,6 +6,7 @@ from collections import defaultdict
 from kovsearch.database import NotFoundException
 from kovsearch.document import DocumentFactory
 from kovsearch.util import Time
+import logging
 
 
 class IndexSearcher:
@@ -25,6 +26,8 @@ class IndexSearcher:
             query_test (str): クエリ文字列
         """
         query = self._doc_factory.build(query_text)
+        logging.debug("query: {}".format(query))
+        logging.debug("query dfs: {}".format(self._db.search_dfs(query.tokens)))
         score_dialogs = self._get_score_dialogs(query)
 
         return list(sorted(score_dialogs,
