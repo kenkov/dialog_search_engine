@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # coding:utf-8
 
-from kovsearch.tokenizer import CaboChaContentWordTokenizer
+from kovsearch.tokenizer import CaboChaContentWordVTagTokenizer
 
 
 class Document:
@@ -35,7 +35,7 @@ class Document:
 
 
 class DocumentFactory:
-    def __init__(self, tokenizer=CaboChaContentWordTokenizer()):
+    def __init__(self, tokenizer=CaboChaContentWordVTagTokenizer()):
         self._tokenizer = tokenizer
 
     def build(self, text):
