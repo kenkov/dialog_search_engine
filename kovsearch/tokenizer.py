@@ -16,6 +16,36 @@ class CaboChaContentWordTokenizer(CaboChaBasicTokenizer):
         super().__init__(pos=pos)
 
 
+class CaboChaContentWordVTagTokenizer(CaboChaBasicTokenizer):
+    def tokenize(self, text):
+        ret = []
+        for chunk in self._analyzer.parse(text):
+            ret.extend(self._get_surfaces(chunk))
+        return ret
+
+    def _get_surfaces(self, chunk):
+        rets = []
+        for token in chunk:
+            if token.surface in {"の", "ん"}:
+                continue
+            if token.pos in {"名詞", "感動詞"}:
+                rets.append(self._get_genkei(token))
+            elif token.pos in {"形容詞", "動詞"}:
+                flags = [self._get_genkei(token)]
+                # 過去形のチェック
+                if chunk.find(lambda tkn: tkn.pos == "助動詞" and tkn.genkei == "た"):
+                    flags.append("タ")
+                if chunk.find(lambda tkn: any([tkn.pos == "助動詞" and tkn.genkei == "か",
+                                               tkn.pos == "助動詞" and tkn.genkei == "っけ",
+                                               tkn.pos == "記号" and tkn.genkei == "？"])):
+                    flags.append("？")
+                rets.append("/".join(flags))
+        return rets
+
+    def _get_genkei(self, token):
+        return token.surface if token.genkei == "*" else token.genkei
+
+
 class CaboChaSemanticWordTokenizer(CaboChaBasicTokenizer):
     """文の意味を表す語の原型のリストを出力するトークナイザー"""
     def __init__(self):
@@ -58,3 +88,13 @@ class CaboChaSemanticWordTokenizer(CaboChaBasicTokenizer):
                 (token.pos == "助詞" and token.pos1 == "接続助詞")
                 ]
         return any(cond)
+
+
+
+if __name__ == "__main__":
+    import sys
+
+    tokenizer = CaboChaContentWordVTagTokenizer()
+    for line in sys.stdin:
+        res = tokenizer.tokenize(line.strip("\n"))
+        print(res)
