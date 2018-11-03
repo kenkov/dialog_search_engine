@@ -7,7 +7,10 @@ from distutils.core import setup
 setup(
     name="kovsearch",
     packages=["kovsearch"],
-    version="0.0.2",
+    install_requires=[
+        "fire>=0.1.3",
+    ],
+    version="0.0.3",
     author="kenkov",
     author_email="kenkovtan@gmail.com",
     url="http://kenkov.jp",
