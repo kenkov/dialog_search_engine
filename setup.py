@@ -10,7 +10,7 @@ setup(
     install_requires=[
         "fire>=0.1.3",
     ],
-    version="0.0.3",
+    version="0.1.1",
     author="kenkov",
     author_email="kenkovtan@gmail.com",
     url="http://kenkov.jp",
